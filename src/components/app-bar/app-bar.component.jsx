@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { Bar } from './app-bar.styles';
+import { Logo, Bar } from './app-bar.styles';
+
+import Controlbutton from '../control-button/control-button.component';
 
 const AppBar = () => (
   <Bar>
-    <div>CryptoDash</div>
+    <Logo>CryptoDash</Logo>
     <div />
-    <div>Dashboard</div>
-    <div>Setting</div>
+    <Controlbutton active name={'dashBoard'} />
+    <Controlbutton name={'setting'} />
   </Bar>
 );
 
