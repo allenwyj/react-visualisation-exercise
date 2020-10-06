@@ -1,6 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 const cc = require('cryptocompare');
+cc.setApiKey(
+  '16767136e843919199fe8510781b0d0140cdbd53d2960742c811665107262c0d'
+);
 
 export const AppContext = createContext({
   page: '',
