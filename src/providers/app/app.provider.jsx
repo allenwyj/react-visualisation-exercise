@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
+const cc = require('cryptocompare');
+
 export const AppContext = createContext({
   page: '',
   firstVisit: true,
@@ -10,11 +12,14 @@ export const AppContext = createContext({
 export const AppProvider = ({ children }) => {
   const [page, setPage] = useState('settings');
   const [firstVisit, setFirstVisit] = useState(true);
+  const [coinList, setCoinList] = useState([]);
 
   const setCurrentPage = page => setPage(page);
   const confirmFavourites = () => {
     setFirstVisit(false);
     setPage('dashboard');
+
+    // setting values to localStorage
     localStorage.setItem(
       'cryptoDash',
       JSON.stringify({
@@ -24,6 +29,7 @@ export const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // checking whether localStorage has cryptoDash value or not
     let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
     // No cache in the browser
     if (!cryptoDashData) {
@@ -33,10 +39,19 @@ export const AppProvider = ({ children }) => {
       setPage('dashboard');
       setFirstVisit(false);
     }
-  }, []);
 
-  console.log(page);
-  console.log(firstVisit);
+    // fetching coin list from cryptocompare API
+    const fetchCoins = async () => {
+      let coinList = (await cc.coinList()).Data;
+      setCoinList(coinList);
+    };
+
+    try {
+      fetchCoins();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <AppContext.Provider
