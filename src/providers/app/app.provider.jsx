@@ -8,6 +8,7 @@ cc.setApiKey(
 export const AppContext = createContext({
   page: '',
   firstVisit: true,
+  coinList: undefined,
   setCurrentPage: () => {},
   confirmFavourites: () => {}
 });
@@ -15,7 +16,7 @@ export const AppContext = createContext({
 export const AppProvider = ({ children }) => {
   const [page, setPage] = useState('settings');
   const [firstVisit, setFirstVisit] = useState(true);
-  const [coinList, setCoinList] = useState([]);
+  const [coinList, setCoinList] = useState(undefined);
 
   const setCurrentPage = page => setPage(page);
   const confirmFavourites = () => {
@@ -58,7 +59,7 @@ export const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ page, firstVisit, setCurrentPage, confirmFavourites }}
+      value={{ page, firstVisit, coinList, setCurrentPage, confirmFavourites }}
     >
       {children}
     </AppContext.Provider>

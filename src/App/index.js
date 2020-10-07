@@ -3,6 +3,7 @@ import './App.css';
 
 import AppBar from '../components/app-bar/app-bar.component';
 import SettingPage from '../pages/setting.page';
+import LoadingContent from '../components/loading-content/loading-content.component';
 
 import { AppProvider } from '../providers/app/app.provider';
 
@@ -13,7 +14,9 @@ const App = () => {
     <AppLayout>
       <AppProvider>
         <AppBar />
-        <SettingPage />
+        <LoadingContent>
+          <SettingPage />
+        </LoadingContent>
       </AppProvider>
     </AppLayout>
   );
