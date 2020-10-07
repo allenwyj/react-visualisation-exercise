@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../providers/app/app.provider';
 
 import { CoinGridStyled } from './coin-grid.styles';
+import { SelectableTileContainer } from '../../shared/tile.styles';
 
 const CoinGrid = () => {
   const { coinList } = useContext(AppContext);
@@ -10,7 +11,7 @@ const CoinGrid = () => {
   return (
     <CoinGridStyled>
       {Object.keys(coinList).map(coinKey => (
-        <div>{coinKey}</div>
+        <SelectableTileContainer>{coinKey}</SelectableTileContainer>
       ))}
     </CoinGridStyled>
   );
