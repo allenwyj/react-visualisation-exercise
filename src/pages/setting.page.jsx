@@ -9,6 +9,7 @@ const SettingPage = () => {
   return (
     <PageContainer name={'settings'}>
       <WelcomeMessage />
+      <CoinGrid topSection />
       <ConfirmButton />
       <CoinGrid />
     </PageContainer>

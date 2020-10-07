@@ -2,14 +2,19 @@ import React from 'react';
 
 import {
   CoinTileHeaderContainer,
-  CoinTileSymbolContainer
+  CoinTileSymbolContainer,
+  DeleteIcon
 } from './coin-tile-header.styles';
 
-const CoinTileHeader = ({ name, symbol }) => {
+const CoinTileHeader = ({ name, symbol, topSection }) => {
   return (
     <CoinTileHeaderContainer>
       <div> {name}</div>
-      <CoinTileSymbolContainer>{symbol}</CoinTileSymbolContainer>
+      {topSection ? (
+        <DeleteIcon>X</DeleteIcon>
+      ) : (
+        <CoinTileSymbolContainer>{symbol}</CoinTileSymbolContainer>
+      )}
     </CoinTileHeaderContainer>
   );
 };

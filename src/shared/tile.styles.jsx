@@ -18,3 +18,15 @@ export const SelectableTileContainer = styled(TileContainer)`
     ${greenBoxShadow}
   }
 `;
+
+export const DeletableTileContainer = styled(SelectableTileContainer)`
+  &:hover {
+    cursor: pointer;
+    ${redBoxShadow}
+  }
+`;
+
+export const DisabledTileContainer = styled(TileContainer)`
+  pointer-events: none;
+  opacity: 0.4;
+`;
