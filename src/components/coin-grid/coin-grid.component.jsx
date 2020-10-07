@@ -7,11 +7,11 @@ import CoinTile from '../../components/coin-tile/coin-tile.component';
 import { CoinGridContainer } from './coin-grid.styles';
 
 const CoinGrid = ({ topSection }) => {
-  const { coinList } = useContext(AppContext);
+  const { coinList, favourites } = useContext(AppContext);
 
   return (
     <CoinGridContainer>
-      {getCoinsToDisplay(coinList, topSection).map(coinKey => (
+      {getCoinsToDisplay(coinList, topSection, favourites).map(coinKey => (
         <CoinTile key={coinKey} coinKey={coinKey} topSection={topSection} />
       ))}
     </CoinGridContainer>

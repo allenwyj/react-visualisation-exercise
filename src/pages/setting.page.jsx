@@ -9,6 +9,9 @@ const SettingPage = () => {
   return (
     <PageContainer name={'settings'}>
       <WelcomeMessage />
+      {
+        // Defining the topSection CoinGrid, it will pass true value as the props
+      }
       <CoinGrid topSection />
       <ConfirmButton />
       <CoinGrid />

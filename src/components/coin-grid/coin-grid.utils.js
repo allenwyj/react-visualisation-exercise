@@ -1,3 +1,3 @@
-export const getCoinsToDisplay = (coinList, topSection) => {
-  return Object.keys(coinList).slice(0, topSection ? 10 : 100);
+export const getCoinsToDisplay = (coinList, topSection, favourites) => {
+  return topSection ? favourites : Object.keys(coinList).slice(0, 100);
 };

@@ -10,6 +10,9 @@ const CoinTileHeader = ({ name, symbol, topSection }) => {
   return (
     <CoinTileHeaderContainer>
       <div> {name}</div>
+      {
+        // If topSection is true, then display delete icon on the right-top corner
+      }
       {topSection ? (
         <DeleteIcon>X</DeleteIcon>
       ) : (

@@ -10,18 +10,34 @@ import {
   DisabledTileContainer
 } from '../../shared/tile.styles';
 
+const clickCoinHandler = (topSection, coinKey, addCoin, removeCoin) => {
+  return topSection
+    ? () => {
+        removeCoin(coinKey);
+      }
+    : () => {
+        addCoin(coinKey);
+      };
+};
+
 const CoinTile = ({ coinKey, topSection }) => {
-  const { coinList } = useContext(AppContext);
+  const { coinList, addCoin, removeCoin, isInFavourites } = useContext(
+    AppContext
+  );
   const coin = coinList[coinKey];
   // Defining the tile container class, by default is CoinGridContainer
   let TileContainerClass = SelectableTileContainer;
 
   if (topSection) {
     TileContainerClass = DeletableTileContainer;
+  } else if (isInFavourites(coinKey)) {
+    TileContainerClass = DisabledTileContainer;
   }
 
   return (
-    <TileContainerClass>
+    <TileContainerClass
+      onClick={clickCoinHandler(topSection, coinKey, addCoin, removeCoin)}
+    >
       <CoinTileHeader
         name={coin.CoinName}
         symbol={coin.Symbol}
