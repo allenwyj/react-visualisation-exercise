@@ -18,20 +18,23 @@ const MAX_FAVOURITES = 10;
 export const AppContext = createContext({
   page: '',
   firstVisit: true,
-  coinList: undefined,
+  coinList: null,
+  filteredCoinsList: null,
   favourites: [],
   setCurrentPage: () => {},
   confirmFavourites: () => {},
   addCoin: () => {},
   removeCoin: () => {},
-  isInFavourites: () => {}
+  isInFavourites: () => {},
+  setFilteredCoins: () => {}
 });
 
 export const AppProvider = ({ children }) => {
   const [page, setPage] = useState('settings');
   const [firstVisit, setFirstVisit] = useState(true);
-  const [coinList, setCoinList] = useState(undefined);
+  const [coinList, setCoinList] = useState(null);
   const [favourites, setFavourites] = useState(['BTC', 'ETH', 'XMR', 'DOGE']);
+  const [filteredCoinsList, setFilteredCoinsList] = useState(null);
 
   const setCurrentPage = page => setPage(page);
   const confirmFavourites = () => {
@@ -64,6 +67,8 @@ export const AppProvider = ({ children }) => {
     let favouritesList = [...favourites];
     setFavourites(_.pull(favouritesList, key));
   };
+
+  const setFilteredCoins = filteredCoins => setFilteredCoinsList(filteredCoins);
 
   // componentDidMount
   useEffect(() => {
@@ -98,12 +103,14 @@ export const AppProvider = ({ children }) => {
         page,
         firstVisit,
         coinList,
+        filteredCoinsList,
         favourites,
         setCurrentPage,
         confirmFavourites,
         addCoin,
         removeCoin,
-        isInFavourites
+        isInFavourites,
+        setFilteredCoins
       }}
     >
       {children}
