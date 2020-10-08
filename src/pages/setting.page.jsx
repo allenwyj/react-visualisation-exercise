@@ -4,6 +4,7 @@ import WelcomeMessage from '../components/welcome-message/welcome-message.compon
 import ConfirmButton from '../components/confirm-button/confirm-button.component';
 import PageContainer from '../components/page-container/page-container.component';
 import CoinGrid from '../components/coin-grid/coin-grid.component';
+import Search from '../components/search/search.component';
 
 const SettingPage = () => {
   return (
@@ -14,6 +15,7 @@ const SettingPage = () => {
       }
       <CoinGrid topSection />
       <ConfirmButton />
+      <Search />
       <CoinGrid />
     </PageContainer>
   );

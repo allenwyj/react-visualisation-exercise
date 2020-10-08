@@ -78,6 +78,7 @@ export const AppProvider = ({ children }) => {
     } else {
       setPage('dashboard');
       setFirstVisit(false);
+      // destructuring from localStorage
       let { favourites } = cryptoDashData;
       setFavourites(favourites);
     }
