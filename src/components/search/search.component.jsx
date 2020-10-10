@@ -22,6 +22,7 @@ const filterCoins = (e, setFilteredCoins, coinList) => {
   e.preventDefault();
 
   let inputValue = e.target.value.replace(/\s/g, '');
+
   if (!inputValue) {
     setFilteredCoins(null);
     return;

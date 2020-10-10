@@ -2,9 +2,17 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../providers/app/app.provider';
 
 const LoadingContent = ({ children }) => {
-  const { coinList } = useContext(AppContext);
+  const { coinList, prices, firstVisit } = useContext(AppContext);
 
-  return <div>{!coinList ? 'Loading Coins...' : children}</div>;
+  if (!coinList) {
+    return <div>Loading Coins...</div>;
+  }
+
+  if (!firstVisit && !prices) {
+    return <div>Loading Prices...</div>;
+  }
+
+  return <div>{children}</div>;
 };
 
 export default LoadingContent;

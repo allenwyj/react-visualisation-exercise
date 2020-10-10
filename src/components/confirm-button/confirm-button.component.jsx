@@ -10,7 +10,7 @@ const ConfirmButton = () => {
   return (
     <CenterDiv>
       <ConfirmButtonStyled onClick={confirmFavourites}>
-        Confirm Favorites
+        Confirm Favourites
       </ConfirmButtonStyled>
     </CenterDiv>
   );
