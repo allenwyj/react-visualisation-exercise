@@ -6,5 +6,10 @@ export const ControlbuttonElem = styled.div`
     props.active &&
     css`
       text-shadow: 0px 0px 25px red;
-    `}
+    `};
+  ${props =>
+    props.hidden &&
+    css`
+      display: none;
+    `};
 `;

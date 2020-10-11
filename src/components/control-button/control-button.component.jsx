@@ -9,12 +9,13 @@ const toProperCase = aString => {
 };
 
 const ControlButton = ({ name }) => {
-  const { page, setCurrentPage } = useContext(AppContext);
-  
+  const { page, firstVisit, setCurrentPage } = useContext(AppContext);
+
   return (
     <ControlbuttonElem
       active={page === name}
       onClick={() => setCurrentPage(name)}
+      hidden={firstVisit && name === 'dashboard'}
     >
       {toProperCase(name)}
     </ControlbuttonElem>
