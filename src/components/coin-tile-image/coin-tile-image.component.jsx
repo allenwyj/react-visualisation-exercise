@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { CoinImageContainer } from './coin-tile-image.styles';
+
 const imgUrl = 'http://cryptocompare.com/';
 
-const CoinImage = ({ coin, style }) => (
-  <img
+const CoinImage = ({ coin, chartCoin }) => (
+  <CoinImageContainer
+    chartCoin={chartCoin}
     alt={coin.CoinSymbol}
-    style={style || { height: '50px' }}
     src={`${imgUrl}${coin.ImageUrl}`}
   />
 );
