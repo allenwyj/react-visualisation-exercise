@@ -14,7 +14,7 @@ const PriceGrid = () => {
       {prices.map((price, index) => {
         const PriceTileClass = index < 5 ? PriceTile : PriceTileCompact;
 
-        return <PriceTileClass price={price} />;
+        return <PriceTileClass key={`priceTileClass-${index}`} price={price} />;
       })}
     </PriceGridContainer>
   );
