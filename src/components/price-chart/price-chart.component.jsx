@@ -11,11 +11,15 @@ import { TileContainer } from '../../shared/tile.styles';
 ReactHighcharts.Highcharts.setOptions(HighchartsTheme);
 
 const PriceChart = () => {
-  const {} = useContext(AppContext);
+  const { historical } = useContext(AppContext);
 
   return (
     <TileContainer>
-      <ReactHighcharts config={highchartsConfig()} />
+      {historical ? (
+        <ReactHighcharts config={highchartsConfig(historical)} />
+      ) : (
+        <div> Loading Chart </div>
+      )}
     </TileContainer>
   );
 };

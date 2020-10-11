@@ -6,7 +6,7 @@ const Percentage = ({ data, formatNumber }) => {
   return (
     <NumberContainer>
       <ChangePercentContainer red={data.CHANGEPCT24HOUR > 0}>
-        {formatNumber(data.CHANGEPCT24HOUR)}
+        {formatNumber(data.CHANGEPCT24HOUR)}%
       </ChangePercentContainer>
     </NumberContainer>
   );

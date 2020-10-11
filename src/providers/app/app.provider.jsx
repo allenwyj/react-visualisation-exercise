@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import moment from 'moment';
 
 import _ from 'lodash';
 const cc = require('cryptocompare');
@@ -9,6 +10,8 @@ cc.setApiKey(
 
 // The number allows users to save their favourite coins.
 const MAX_FAVOURITES = 10;
+// The number limits the number of days will be displayed with its data.
+const TIME_UNITS = 10;
 
 export const AppContext = createContext({
   page: '',
@@ -18,6 +21,7 @@ export const AppContext = createContext({
   favourites: [],
   currentFavourite: null,
   prices: null,
+  historical: null,
   setCurrentPage: () => {},
   confirmFavourites: () => {},
   addCoin: () => {},
@@ -34,10 +38,11 @@ export class AppProvider extends React.Component {
     this.state = {
       page: 'dashboard',
       favourites: ['BTC', 'ETH', 'XMR', 'DOGE'],
-      // return: { page: 'settings', firstVisit: true } || { favourites }
+      // run and return: { page: 'settings', firstVisit: true } || { favourites, currentFavourite, firstVisit: false }
       ...this.savedSettings(),
       coinList: null,
       prices: null,
+      historical: null,
       setCurrentPage: this.setCurrentPage,
       confirmFavourites: this.confirmFavourites,
       addCoin: this.addCoin,
@@ -51,6 +56,7 @@ export class AppProvider extends React.Component {
   componentDidMount = () => {
     this.fetchCoins();
     this.fetchPrices();
+    this.fetchHistorical();
   };
 
   // fetching data from localStorage and return object
@@ -79,6 +85,42 @@ export class AppProvider extends React.Component {
     let prices = await this.getPricesFromAPI();
     prices = prices.filter(price => Object.keys(price).length);
     this.setState({ prices });
+  };
+
+  fetchHistorical = async () => {
+    if (this.state.firstVisit) return;
+    const results = await this.getHistoricalFromAPI();
+    const historical = [
+      {
+        name: this.state.currentFavourite,
+        data: results.map((val, index) => [
+          moment()
+            .subtract({ months: TIME_UNITS - index })
+            .valueOf(),
+          val.USD
+        ])
+      }
+    ];
+    this.setState({ historical });
+  };
+
+  getHistoricalFromAPI = async () => {
+    let returnData = [];
+    const { currentFavourite } = this.state;
+
+    // iterating and getting the past x period from now
+    for (let units = TIME_UNITS; units > 0; units--) {
+      returnData.push(
+        cc.priceHistorical(
+          currentFavourite,
+          ['USD'],
+          moment().subtract({ months: units }).toDate() // the current time and subtract 10 months from now (if units is 10)
+        )
+      );
+    }
+
+    // Return when all of these promises have results.
+    return Promise.all(returnData);
   };
 
   getPricesFromAPI = async () => {
@@ -114,9 +156,13 @@ export class AppProvider extends React.Component {
   setCurrentPage = page => this.setState({ page });
 
   setCurrentFavourite = currentFavourite => {
-    this.setState({
-      currentFavourite: currentFavourite
-    });
+    this.setState(
+      {
+        currentFavourite: currentFavourite,
+        historical: null // clearing the old historical data
+      },
+      this.fetchHistorical //fetching new historical data after the new state updated
+    );
 
     localStorage.setItem(
       'cryptoDash',
@@ -135,10 +181,12 @@ export class AppProvider extends React.Component {
         firstVisit: false,
         page: 'dashboard',
         prices: null,
-        currentFavourite
+        currentFavourite,
+        historical: null
       },
       () => {
         this.fetchPrices();
+        this.fetchHistorical();
       }
     );
 
