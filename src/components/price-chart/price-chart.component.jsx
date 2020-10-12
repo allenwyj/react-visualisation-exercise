@@ -4,6 +4,7 @@ import ReactHighcharts from 'react-highcharts';
 import { AppContext } from '../../providers/app/app.provider';
 import highchartsConfig from '../highcharts/HighchartsConfig';
 import HighchartsTheme from '../highcharts/HighchartsTheme';
+import ChartSelect from '../chart-select/chart-select.component';
 
 import { TileContainer } from '../../shared/tile.styles';
 
@@ -15,6 +16,7 @@ const PriceChart = () => {
 
   return (
     <TileContainer>
+      <ChartSelect />
       {historical ? (
         <ReactHighcharts config={highchartsConfig(historical)} />
       ) : (

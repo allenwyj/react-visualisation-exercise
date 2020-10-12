@@ -1,3 +1,5 @@
+import { lightTheme } from '../../shared/Styles';
+
 const theme = {
   // replacing the line colours
   colors: [
@@ -12,11 +14,11 @@ const theme = {
   ],
   chart: {
     // changing to the main background colour: dark blue
-    backgroundColor: '#061a44',
+    backgroundColor: lightTheme ? 'white' : '#061a44',
     borderColor: '#000000',
     borderWidth: 0,
     className: 'dark-container',
-    plotBackgroundColor: '#061a44',
+    plotBackgroundColor: lightTheme ? 'white' : '#061a44',
     plotBorderWidth: 0
   },
   title: {

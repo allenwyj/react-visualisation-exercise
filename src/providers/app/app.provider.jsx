@@ -19,6 +19,7 @@ export const AppContext = createContext({
   coinList: null,
   filteredCoinsList: null,
   favourites: [],
+  timeInterval: 'months',
   currentFavourite: null,
   prices: null,
   historical: null,
@@ -28,7 +29,8 @@ export const AppContext = createContext({
   removeCoin: () => {},
   isInFavourites: () => {},
   setFilteredCoins: () => {},
-  setCurrentFavourite: () => {}
+  setCurrentFavourite: () => {},
+  changeChartSelect: () => {}
 });
 
 export class AppProvider extends React.Component {
@@ -38,6 +40,7 @@ export class AppProvider extends React.Component {
     this.state = {
       page: 'dashboard',
       favourites: ['BTC', 'ETH', 'XMR', 'DOGE'],
+      timeInterval: 'months',
       // run and return: { page: 'settings', firstVisit: true } || { favourites, currentFavourite, firstVisit: false }
       ...this.savedSettings(),
       coinList: null,
@@ -49,7 +52,8 @@ export class AppProvider extends React.Component {
       removeCoin: this.removeCoin,
       isInFavourites: this.isInFavourites,
       setFilteredCoins: this.setFilteredCoins,
-      setCurrentFavourite: this.setCurrentFavourite
+      setCurrentFavourite: this.setCurrentFavourite,
+      changeChartSelect: this.changeChartSelect
     };
   }
 
@@ -95,7 +99,7 @@ export class AppProvider extends React.Component {
         name: this.state.currentFavourite,
         data: results.map((val, index) => [
           moment()
-            .subtract({ months: TIME_UNITS - index })
+            .subtract({ [this.state.timeInterval]: TIME_UNITS - index }) // [] -> computed property name
             .valueOf(),
           val.USD
         ])
@@ -114,7 +118,9 @@ export class AppProvider extends React.Component {
         cc.priceHistorical(
           currentFavourite,
           ['USD'],
-          moment().subtract({ months: units }).toDate() // the current time and subtract 10 months from now (if units is 10)
+          moment()
+            .subtract({ [this.state.timeInterval]: units })
+            .toDate() // the current time and subtract 10 months from now (if units is 10)
         )
       );
     }
@@ -197,6 +203,15 @@ export class AppProvider extends React.Component {
         favourites: this.state.favourites,
         currentFavourite
       })
+    );
+  };
+
+  changeChartSelect = value => {
+    console.log(value);
+    // clear the previous historical data and fetch new data after setting state successfully
+    this.setState(
+      { timeInterval: value, historical: null },
+      this.fetchHistorical
     );
   };
 
